@@ -1,0 +1,7 @@
+name: MidoMika-LifeBind
+version: '${project.version}'
+main: me.mika.midomikalifebind.MidoMika_LifeBind
+api-version: '1.19'
+commands:
+  lb:
+    description: life bind commands.
