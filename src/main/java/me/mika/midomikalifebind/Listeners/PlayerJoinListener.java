@@ -70,7 +70,7 @@ public class PlayerJoinListener implements Listener {
 
 
             }else {
-                p.sendMessage("missing one player");
+
 
             }
 
