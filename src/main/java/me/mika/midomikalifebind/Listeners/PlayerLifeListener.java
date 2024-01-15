@@ -185,51 +185,29 @@ public class PlayerLifeListener implements Listener {
         String splitData = playerData.get(key, PersistentDataType.STRING);
         if (splitData != null) {
             String[] splitedData = splitData.split("-");
-            player1Data = Bukkit.getPlayer(splitedData[0]).getPersistentDataContainer();
-            player2Data = Bukkit.getPlayer(splitedData[1]).getPersistentDataContainer();
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                onlinePlayerList.add(onlinePlayer.getName());
+            if (Bukkit.getPlayer(splitedData[0]) != null && Bukkit.getPlayer(splitedData[1]) != null) {
+                player1Data = Bukkit.getPlayer(splitedData[0]).getPersistentDataContainer();
+                player2Data = Bukkit.getPlayer(splitedData[1]).getPersistentDataContainer();
 
-            }
-            // 检查是否玩家吃的是金苹果
-            if (e.getItem().getType() == Material.ENCHANTED_GOLDEN_APPLE) {
-                if (onlinePlayerList.contains(splitedData[0]) && onlinePlayerList.contains(splitedData[1])) {
-                    if (p.getName().equals(splitedData[0])) {
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                if (!Bukkit.getPlayer(splitedData[1]).isDead() && !Bukkit.getPlayer(splitedData[1]).getGameMode().toString().equals("CREATIVE")) {
-                                    Bukkit.getPlayer(splitedData[1]).addPotionEffects(Bukkit.getPlayer(splitedData[0]).getActivePotionEffects());
+                for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                    onlinePlayerList.add(onlinePlayer.getName());
 
-                                }
-                            }
-                        }.runTaskLater(MidoMika_LifeBind.getPlugin(), 1);
-                    } else if (p.getName().equals(splitedData[1])) {
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                if (!Bukkit.getPlayer(splitedData[0]).isDead() && !Bukkit.getPlayer(splitedData[0]).getGameMode().toString().equals("CREATIVE")) {
-                                    Bukkit.getPlayer(splitedData[0]).addPotionEffects(Bukkit.getPlayer(splitedData[1]).getActivePotionEffects());
-
-                                }
-                            }
-                        }.runTaskLater(MidoMika_LifeBind.getPlugin(), 1);
-                    }
                 }
-            } else if (e.getItem().getType() == Material.GOLDEN_APPLE) {
-                if (onlinePlayerList.contains(splitedData[0]) && onlinePlayerList.contains(splitedData[1])) {
-                    if (p.getName().equals(splitedData[0])) {
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                if (!Bukkit.getPlayer(splitedData[1]).isDead() && !Bukkit.getPlayer(splitedData[1]).getGameMode().toString().equals("CREATIVE")) {
-                                    Bukkit.getPlayer(splitedData[1]).addPotionEffects(Bukkit.getPlayer(splitedData[0]).getActivePotionEffects());
+                // 检查是否玩家吃的是金苹果
+                if (e.getItem().getType() == Material.ENCHANTED_GOLDEN_APPLE) {
+                    if (onlinePlayerList.contains(splitedData[0]) && onlinePlayerList.contains(splitedData[1])) {
+                        if (p.getName().equals(splitedData[0])) {
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if (!Bukkit.getPlayer(splitedData[1]).isDead() && !Bukkit.getPlayer(splitedData[1]).getGameMode().toString().equals("CREATIVE")) {
+                                        Bukkit.getPlayer(splitedData[1]).addPotionEffects(Bukkit.getPlayer(splitedData[0]).getActivePotionEffects());
 
+                                    }
                                 }
-                            }
-                        }.runTaskLater(MidoMika_LifeBind.getPlugin(), 1);
-                    } else if (p.getName().equals(splitedData[1])) {
-                        new BukkitRunnable() {
+                            }.runTaskLater(MidoMika_LifeBind.getPlugin(), 1);
+                        } else if (p.getName().equals(splitedData[1])) {
+                            new BukkitRunnable() {
                                 @Override
                                 public void run() {
                                     if (!Bukkit.getPlayer(splitedData[0]).isDead() && !Bukkit.getPlayer(splitedData[0]).getGameMode().toString().equals("CREATIVE")) {
@@ -237,12 +215,37 @@ public class PlayerLifeListener implements Listener {
 
                                     }
                                 }
-                        }.runTaskLater(MidoMika_LifeBind.getPlugin(), 1);
+                            }.runTaskLater(MidoMika_LifeBind.getPlugin(), 1);
+                        }
+                    }
+                } else if (e.getItem().getType() == Material.GOLDEN_APPLE) {
+                    if (onlinePlayerList.contains(splitedData[0]) && onlinePlayerList.contains(splitedData[1])) {
+                        if (p.getName().equals(splitedData[0])) {
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if (!Bukkit.getPlayer(splitedData[1]).isDead() && !Bukkit.getPlayer(splitedData[1]).getGameMode().toString().equals("CREATIVE")) {
+                                        Bukkit.getPlayer(splitedData[1]).addPotionEffects(Bukkit.getPlayer(splitedData[0]).getActivePotionEffects());
+
+                                    }
+                                }
+                            }.runTaskLater(MidoMika_LifeBind.getPlugin(), 1);
+                        } else if (p.getName().equals(splitedData[1])) {
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if (!Bukkit.getPlayer(splitedData[0]).isDead() && !Bukkit.getPlayer(splitedData[0]).getGameMode().toString().equals("CREATIVE")) {
+                                        Bukkit.getPlayer(splitedData[0]).addPotionEffects(Bukkit.getPlayer(splitedData[1]).getActivePotionEffects());
+
+                                    }
+                                }
+                            }.runTaskLater(MidoMika_LifeBind.getPlugin(), 1);
+                        }
                     }
                 }
             }
+            onlinePlayerList.clear();
         }
-        onlinePlayerList.clear();
     }
 
     @EventHandler
